@@ -22,7 +22,7 @@ class SimpleDb implements \Hx\Db\DbInterface {
 			$result = $stmt->execute($parameter);
 		
 		if ($result === false)
-			throw new \Hx\Database\DbException(
+			throw new DbException(
 				"Fail to run sql: " . $stmt->errorInfo());
 		
 		return $stmt;
