@@ -7,6 +7,8 @@ class Select implements SelectInterface {
 	
 	private $select, $where, $group, $join, $order, $table, $pgIndex, $pgSize;
 	
+	private $hasPagination;
+	
 	public function __construct(\Hx\Db\DbInterface $db)
 	{
 		$this->db = $db;
@@ -83,7 +85,7 @@ class Select implements SelectInterface {
 		}
 	
 		//pagination
-		if ($this->pgIndex != 0 && $this->pgSize != 0) {
+		if ($this->hasPagination === true) {
 			$pgSize = $this->pgSize;
 			$offset = $this->pgIndex * $this->pgSize;
 			$sql .= " LIMIT $pgSize OFFSET $offset";
@@ -117,6 +119,8 @@ class Select implements SelectInterface {
 			$this->pgIndex = 0;
 			
 			$this->pgSize = 0;
+			
+			$this->hasPagination = false;
 		}
 		
 		return $this;
@@ -170,6 +174,8 @@ class Select implements SelectInterface {
 	
 	public function paginate($pageIndex, $pageSize)
 	{
+		$this->hasPagination = true;
+		
 		$this->pgIndex = $pageIndex;
 		
 		$this->pgSize = $pageSize;
