@@ -38,5 +38,20 @@ class SimpleDb implements \Hx\Db\DbInterface {
 				
 		return $this->pdo->exec(file_get_contents($sqlFilePath));
 	}
+	
+	public function BeginTransaction()
+	{
+		$this->pdo->beginTransaction();
+	}
+	
+	public function RollBackTransaction()
+	{
+		$this->pdo->rollBack();
+	}
+	
+	public function CommitTransaction()
+	{
+		$this->pdo->commit();
+	}
 }
 ?>

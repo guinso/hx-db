@@ -14,5 +14,11 @@ Interface DbInterface {
 	 * @param string $sqlFilePath	<p>file path of the SQL script</p>
 	 */
 	public function runSqlFile($sqlFilePath);
+	
+	public function BeginTransaction();
+	
+	public function RollBackTransaction();
+	
+	public function CommitTransaction();
 }
 ?>
