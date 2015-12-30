@@ -8,5 +8,7 @@ interface SqlServiceInterface {
 	public function createInsertSql();
 	
 	public function createUpdateSql();
+	
+	public function getDb();
 }
 ?>

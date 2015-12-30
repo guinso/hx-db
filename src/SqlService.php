@@ -24,5 +24,10 @@ class SqlService implements SqlServiceInterface {
 	{
 		return new Sql\Update($this->db);
 	}
+	
+	public function getDb()
+	{
+		return $this->db;
+	}
 }
 ?>
