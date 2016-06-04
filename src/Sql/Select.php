@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types=1);
+
 namespace Hx\Db\Sql;
 
 class Select implements SelectInterface {
@@ -16,7 +18,7 @@ class Select implements SelectInterface {
 		$this->reset(self::RESET_PARAM | self::RESET_SQL);
 	}
 	
-	public function execute(array $param = null)
+	public function execute(array $param = null): \PDOStatement
 	{
 		return $this->db->runSql(
 			$this->generateSql(), 
@@ -24,7 +26,7 @@ class Select implements SelectInterface {
 				$this->param : $param);
 	}
 	
-	public function generateSql()
+	public function generateSql(): string
 	{
 		$sql = '';
 	
@@ -94,7 +96,7 @@ class Select implements SelectInterface {
 		return $sql;
 	}
 	
-	public function reset($options = null)
+	public function reset(int $options = null): \Hx\Db\Sql\SelectInterface
 	{
 		if (is_null($options))
 			$options = self::RESET_PARAM | self::RESET_SQL;
@@ -126,42 +128,42 @@ class Select implements SelectInterface {
 		return $this;
 	}
 	
-	public function select($column)
+	public function select(string $column): \Hx\Db\Sql\SelectInterface
 	{
 		$this->select[] = $column;
 		
 		return $this;
 	}
 	
-	public function table($tableName)
+	public function table(string $tableName): \Hx\Db\Sql\SelectInterface
 	{
 		$this->table = $tableName;
 		
 		return $this;
 	}
 	
-	public function where($clause)
+	public function where(string $clause): \Hx\Db\Sql\SelectInterface
 	{
 		$this->where[] = $clause;
 		
 		return $this;
 	}
 	
-	public function order($column)
+	public function order(string $column): \Hx\Db\Sql\SelectInterface
 	{
 		$this->order[] = $column;
 		
 		return $this;
 	}
 	
-	public function group($column)
+	public function group(string $column): \Hx\Db\Sql\SelectInterface
 	{
 		$this->group[] = $column;
 		
 		return $this;
 	}
 	
-	public function join($mode, $table, $clause)
+	public function join(string $mode, string $table, string $clause): \Hx\Db\Sql\SelectInterface
 	{
 		$this->join[] = array(
 			'mode' => $mode,
@@ -172,7 +174,7 @@ class Select implements SelectInterface {
 		return $this;
 	}
 	
-	public function paginate($pageIndex, $pageSize)
+	public function paginate(int $pageIndex, int $pageSize): \Hx\Db\Sql\SelectInterface
 	{
 		$this->hasPagination = true;
 		
@@ -183,7 +185,7 @@ class Select implements SelectInterface {
 		return $this;
 	}
 	
-	public function param($paramName, $value)
+	public function param(string $paramName, mixed $value): \Hx\Db\Sql\SelectInterface
 	{
 		$this->param[$paramName] = $value;
 		

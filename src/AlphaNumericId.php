@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types=1);
+
 namespace Hx\Db;
 
 class AlphaNumericId {
@@ -7,8 +9,8 @@ class AlphaNumericId {
 	
 	public function __construct(
 			\Hx\Db\Sql\SelectInterface $selectSql, 
-			$alpha, 
-			$numericLength)
+			string $alpha, 
+			int $numericLength)
 	{
 		$this->selectSql = $selectSql;
 		
@@ -17,7 +19,13 @@ class AlphaNumericId {
 		$this->length = $numericLength;
 	}
 	
-	public function getNextId($tableName, $columnName)
+	/**
+	 * Get next increment alphanumeric ID for that data column
+	 * @param string $tableName
+	 * @param string $columnName
+	 * @return string
+	 */
+	public function getNextId(string $tableName, string $columnName): string
 	{
 		$this->selectSql
 			->reset()

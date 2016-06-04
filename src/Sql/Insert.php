@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types=1);
+
 namespace Hx\Db\Sql;
 
 class Insert implements InsertInterface {
@@ -12,7 +14,7 @@ class Insert implements InsertInterface {
 		$this->reset(self::RESET_PARAM | self::RESET_SQL);
 	}
 	
-	public function execute(array $param = null)
+	public function execute(array $param = null): \PDOStatement
 	{
 		return $this->db->runSql(
 			$this->generateSql(), 
@@ -20,7 +22,7 @@ class Insert implements InsertInterface {
 		);
 	}
 	
-	public function generateSql()
+	public function generateSql(): string
 	{
 		$sql = "INSERT  INTO {$this->table} ";
 		
@@ -51,21 +53,21 @@ class Insert implements InsertInterface {
 		return $sql . "($col) values ($values);";
 	}
 	
-	public function table($tableName)
+	public function table($tableName): \Hx\Db\Sql\InsertInterface
 	{
 		$this->table = $tableName;
 		
 		return $this;
 	}
 	
-	public function column($name, $value)
+	public function column(string $name, $value): \Hx\Db\Sql\InsertInterface
 	{
 		$this->column[$name] = $value;
 		
 		return $this;
 	}
 	
-	public function reset($options = null)
+	public function reset(int $options = null): \Hx\Db\Sql\InsertInterface
 	{
 		if (is_null($options))
 			$options = self::RESET_PARAM | self::RESET_SQL;
@@ -85,7 +87,7 @@ class Insert implements InsertInterface {
 		return $this;
 	}
 	
-	public function param($paramName, $value)
+	public function param(string $paramName, $value): \Hx\Db\Sql\InsertInterface
 	{
 		$this->param[$paramName] = $value;
 	

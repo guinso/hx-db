@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types=1);
+
 namespace Hx\Db\Sql;
 
 interface UpdateInterface {
@@ -6,18 +8,54 @@ interface UpdateInterface {
 	const RESET_SQL = 1;
 	const RESET_PARAM = 2;
 	
-	public function execute(array $param = null);
+	/**
+	 * Execute SQL based on current configuration
+	 * @param array $param
+	 * @return \PDOStatement
+	 */
+	public function execute(array $param = null): \PDOStatement;
 	
-	public function generateSql();
+	/**
+	 * Generate SQL script based on current configuration
+	 * @return string
+	 */
+	public function generateSql(): string;
 	
-	public function table($tableName);
+	/**
+	 * Set data table
+	 * @param string $tableName
+	 * @return \Hx\Db\Sql\UpdateInterface
+	 */
+	public function table(string $tableName): \Hx\Db\Sql\UpdateInterface;
 	
-	public function column($name, $value);
+	/**
+	 * Add column for update
+	 * @param string $name
+	 * @param mixed $value
+	 * @return \Hx\Db\Sql\UpdateInterface
+	 */
+	public function column(string $name, mixed $value): \Hx\Db\Sql\UpdateInterface;
 	
-	public function where($clause);
+	/**
+	 * Add where clause
+	 * @param string $clause
+	 * @return \Hx\Db\Sql\UpdateInterface
+	 */
+	public function where(string $clause): \Hx\Db\Sql\UpdateInterface;
 	
-	public function param($paramName, $value);
+	/**
+	 * Add binding
+	 * @param string $paramName
+	 * @param mixed $value
+	 * @return \Hx\Db\Sql\UpdateInterface
+	 */
+	public function param(string $paramName, mixed $value): \Hx\Db\Sql\UpdateInterface;
 	
-	public function reset($options = null);
+	/**
+	 * Reset current configuration
+	 * @param int $options
+	 * @return \Hx\Db\Sql\UpdateInterface
+	 */
+	public function reset(int $options = null): \Hx\Db\Sql\UpdateInterface;
 }
 ?>

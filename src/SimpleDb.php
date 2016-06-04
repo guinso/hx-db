@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types=1);
+
 namespace Hx\Db;
 
 class SimpleDb implements \Hx\Db\DbInterface {
@@ -10,7 +12,7 @@ class SimpleDb implements \Hx\Db\DbInterface {
 		$this->pdo = $pdo;
 	}
 	
-	public function runSql($sql, array $parameter = null)
+	public function runSql($sql, array $parameter = null): \PDOStatement
 	{
 		$stmt = $this->pdo->prepare($sql);
 		
@@ -28,7 +30,7 @@ class SimpleDb implements \Hx\Db\DbInterface {
 		return $stmt;
 	}
 	
-	public function runSqlFile($sqlFilePath)
+	public function runSqlFile(string $sqlFilePath): int
 	{
 		if (!file_exists($sqlFilePath))
 			Throw new DbException("File $sqlFilePath not found.");
@@ -39,17 +41,17 @@ class SimpleDb implements \Hx\Db\DbInterface {
 		return $this->pdo->exec(file_get_contents($sqlFilePath));
 	}
 	
-	public function BeginTransaction()
+	public function BeginTransaction(): bool
 	{
 		$this->pdo->beginTransaction();
 	}
 	
-	public function RollBackTransaction()
+	public function RollBackTransaction(): bool
 	{
 		$this->pdo->rollBack();
 	}
 	
-	public function CommitTransaction()
+	public function CommitTransaction(): bool
 	{
 		$this->pdo->commit();
 	}

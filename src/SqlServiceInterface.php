@@ -1,14 +1,32 @@
 <?php 
+declare(strict_types=1);
+
 namespace Hx\Db;
 
 interface SqlServiceInterface {
 	
-	public function createSelectSql();
+	/**
+	 * Create Select SQL instance
+	 * @return \Hx\Db\Sql\SelectInterface
+	 */
+	public function createSelectSql(): \Hx\Db\Sql\SelectInterface;
 	
-	public function createInsertSql();
+	/**
+	 * Create Insert SQL instance
+	 * @return \Hx\Db\Sql\InsertInterface
+	 */
+	public function createInsertSql(): \Hx\Db\Sql\InsertInterface;
 	
-	public function createUpdateSql();
+	/**
+	 * Create Update SQL instance
+	 * @return \Hx\Db\Sql\UpdateInterface
+	 */
+	public function createUpdateSql(): \Hx\Db\Sql\UpdateInterface;
 	
-	public function getDb();
+	/**
+	 * Get database handler
+	 * @return \Hx\Db\DbInterface
+	 */
+	public function getDb(): \Hx\Db\DbInterface;
 }
 ?>

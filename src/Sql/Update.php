@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types=1);
+
 namespace Hx\Db\Sql;
 
 class Update implements UpdateInterface {
@@ -12,7 +14,7 @@ class Update implements UpdateInterface {
 		$this->reset(self::RESET_PARAM | self::RESET_SQL);
 	}
 	
-	public function execute(array $param = null)
+	public function execute(array $param = null): \PDOStatement
 	{
 		return $this->db->runSql(
 			$this->generateSql(), 
@@ -20,7 +22,7 @@ class Update implements UpdateInterface {
 		);
 	}
 	
-	public function generateSql()
+	public function generateSql(): string 
 	{
 		$sql = "UPDATE {$this->table} SET ";
 		
@@ -62,35 +64,35 @@ class Update implements UpdateInterface {
 		return $sql . ";";
 	}
 	
-	public function table($tableName)
+	public function table(string $tableName): \Hx\Db\Sql\UpdateInterface
 	{
 		$this->table = $tableName;
 		
 		return $this;
 	}
 	
-	public function column($name, $value)
+	public function column(string $name, mixed $value): \Hx\Db\Sql\UpdateInterface
 	{
 		$this->column[$name] = $value;
 		
 		return $this;
 	}
 	
-	public function where($clause)
+	public function where(string $clause): \Hx\Db\Sql\UpdateInterface
 	{
 		$this->where[] = $clause;
 		
 		return $this;
 	}
 	
-	public function param($paramName, $value)
+	public function param(string $paramName, mixed $value): \Hx\Db\Sql\UpdateInterface
 	{
 		$this->param[$paramName] = $value;
 		
 		return $this;
 	}
 	
-	public function reset($options = null)
+	public function reset(int $options = null): \Hx\Db\Sql\UpdateInterface
 	{
 		if (is_null($options))
 			$options = self::RESET_PARAM | self::RESET_SQL;
